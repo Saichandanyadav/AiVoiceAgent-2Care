@@ -6,7 +6,9 @@ import voiceRoutes from "./routes/voice.routes";
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: "*"
+}));
 app.use(express.json());
 app.use("/outputs", express.static("outputs"));
 
