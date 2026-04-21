@@ -4,13 +4,13 @@ import { textToSpeech } from "../services/tts.service";
 import { runAgent } from "../agents/agent";
 import { trackLatency } from "../utils/latency";
 
-export const handleVoice = async (req: Request, res: Response) => {
+export const handleVoice = async (req: Request & { file?: any }, res: Response) => {
   try {
     const audioPath = req.file?.path;
     if (!audioPath) return res.status(400).json({ error: "No audio" });
 
     const sttTimer = trackLatency();
-    const text = await speechToText(audioPath);
+    const text = await speechToText();
     const sttTime = sttTimer.end();
 
     const agentTimer = trackLatency();
@@ -28,11 +28,9 @@ export const handleVoice = async (req: Request, res: Response) => {
       latency: { sttTime, agentTime, ttsTime }
     });
   } catch (err: any) {
-  console.error("FULL ERROR:", err);
-
-  res.status(500).json({
-    error: "Error",
-    message: err.message
-  });
-}
+    res.status(500).json({
+      error: "Error",
+      message: err.message
+    });
+  }
 };
