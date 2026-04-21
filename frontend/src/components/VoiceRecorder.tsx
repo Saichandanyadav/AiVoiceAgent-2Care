@@ -15,6 +15,8 @@ export default function VoiceRecorder() {
   const chunks = useRef<any[]>([]);
   const chatRef = useRef<HTMLDivElement | null>(null);
 
+  const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+
   const scrollToBottom = () => {
     if (chatRef.current) {
       chatRef.current.scrollTo({
@@ -76,7 +78,7 @@ export default function VoiceRecorder() {
     ]);
 
     try {
-      const res = await fetch("http://localhost:5000/api/voice", {
+      const res = await fetch(`${API_URL}/api/voice`, {
         method: "POST",
         body: form
       });
@@ -167,8 +169,8 @@ export default function VoiceRecorder() {
             <h3 className="text-base sm:text-lg font-black text-slate-900 mb-1">Appointment Fixed!</h3>
             <p className="text-xs sm:text-sm text-slate-500 leading-relaxed mb-4">{m.text}</p>
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 p-3 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
-               <div className="text-[10px] uppercase tracking-widest font-bold text-slate-400">Reference ID:</div>
-               <div className="text-xs font-mono font-bold text-slate-700">#CARE-2026-X9</div>
+              <div className="text-[10px] uppercase tracking-widest font-bold text-slate-400">Reference ID:</div>
+              <div className="text-xs font-mono font-bold text-slate-700">#CARE-2026-X9</div>
             </div>
           </div>
         </div>
@@ -225,7 +227,7 @@ export default function VoiceRecorder() {
           animation: dash 2s linear infinite;
         }
       `}</style>
-      
+
       <aside className={`fixed inset-y-0 left-0 transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} lg:relative lg:translate-x-0 transition-transform duration-300 ease-in-out w-72 bg-slate-900 text-white flex-col p-6 shadow-2xl z-50 lg:flex`}>
         <div className="flex items-center justify-between mb-12 px-2">
           <div className="flex items-center gap-3">
@@ -238,12 +240,12 @@ export default function VoiceRecorder() {
             <X size={24} />
           </button>
         </div>
-        
+
         <NavigationItems />
 
         <div className="bg-slate-800/50 p-4 rounded-2xl border border-slate-700/50 mt-auto">
-            <p className="text-[10px] font-bold text-slate-500 uppercase mb-2">Connected as</p>
-            <p className="text-xs font-bold">Health Guest</p>
+          <p className="text-[10px] font-bold text-slate-500 uppercase mb-2">Connected as</p>
+          <p className="text-xs font-bold">Health Guest</p>
         </div>
       </aside>
 
@@ -259,7 +261,7 @@ export default function VoiceRecorder() {
             </button>
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-sky-500 rounded-lg flex items-center justify-center">
-                  <Sparkles className="text-white" size={16} />
+                <Sparkles className="text-white" size={16} />
               </div>
               <h1 className="font-black text-slate-900 tracking-tight text-sm sm:text-base">2Care.ai</h1>
             </div>
@@ -279,7 +281,6 @@ export default function VoiceRecorder() {
                   <p className="text-slate-400 max-w-xs mx-auto text-xs sm:text-sm leading-relaxed px-4">
                     Tell me your symptoms and I'll help you find the right doctor instantly.
                   </p>
-                  
                   {!recording && (
                     <div className="absolute top-[85%] left-1/2 -translate-x-1/2 w-full h-[120px] pointer-events-none hidden sm:block">
                       <svg viewBox="0 0 200 120" className="w-full h-full text-sky-500/50 overflow-visible">
@@ -295,17 +296,20 @@ export default function VoiceRecorder() {
                 <div key={i} className={`flex w-full ${m.role === "ai" ? "justify-start" : "justify-end"} animate-in fade-in slide-in-from-bottom-4 duration-500`}>
                   <div className={`max-w-[95%] sm:max-w-[85%] lg:max-w-[75%] group`}>
                     <div className={`px-4 py-3 sm:px-5 sm:py-4 rounded-[1.5rem] sm:rounded-[2rem] text-[14px] sm:text-[15px] shadow-sm relative ${m.role === "ai" ? "bg-white border border-slate-100 text-slate-700 rounded-tl-none" : "bg-slate-900 text-white rounded-tr-none"}`}>
-                      {m.loading ? <Dots /> : <RenderMessage m={m} />}
+                      {m.loading && !thinking ? <Dots /> : <RenderMessage m={m} />}
                     </div>
-                    <div className={`text-[9px] sm:text-[10px] font-bold mt-2 px-2 uppercase tracking-tighter opacity-60 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity ${m.role === "ai" ? "text-slate-400" : "text-slate-500 text-right"}`}>
+                    <div className={`text-[9px] sm:text-[10px] font-bold mt-2 px-2 uppercase tracking-tighter opacity-60 ${m.role === "ai" ? "text-slate-400" : "text-slate-500 text-right"}`}>
                       {m.role === "ai" ? "Assistant" : "You"} • {m.time}
                     </div>
                   </div>
                 </div>
               ))}
+
               {thinking && (
                 <div className="flex justify-start">
-                  <div className="bg-white border border-slate-100 px-5 py-3 sm:px-6 sm:py-4 rounded-[1.5rem] sm:rounded-[2rem] rounded-tl-none shadow-sm"><Dots /></div>
+                  <div className="bg-white border border-slate-100 px-5 py-3 sm:px-6 sm:py-4 rounded-[1.5rem] sm:rounded-[2rem] rounded-tl-none shadow-sm">
+                    <Dots />
+                  </div>
                 </div>
               )}
             </div>
@@ -314,9 +318,9 @@ export default function VoiceRecorder() {
               <div className="relative group">
                 <div className={`absolute -inset-3 sm:-inset-4 rounded-full blur-2xl transition-all duration-500 opacity-20 ${recording ? "bg-red-500 opacity-40 scale-125" : "bg-sky-400 group-hover:bg-sky-500"}`} />
                 <button onClick={recording ? stop : start} className={`relative w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl active:scale-90 ${recording ? "bg-red-500 ring-4 sm:ring-8 ring-red-100" : "bg-slate-900 hover:bg-sky-600"}`}>
-                    {recording ? <Square className="text-white fill-white w-7 h-7 sm:w-8 sm:h-8" /> : <Mic className="text-white w-7.5 h-7.5 sm:w-9 sm:h-9" />}
+                  {recording ? <Square className="text-white fill-white w-7 h-7 sm:w-8 sm:h-8" /> : <Mic className="text-white w-7.5 h-7.5 sm:w-9 sm:h-9" />}
                 </button>
-                {recording && (
+                 {recording && (
                     <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-red-500 text-white text-[9px] sm:text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest animate-bounce whitespace-nowrap">
                         Listening...
                     </div>
@@ -327,11 +331,11 @@ export default function VoiceRecorder() {
         ) : (
           <div className="flex-1 flex items-center justify-center p-6 sm:p-12">
             <div className="text-center">
-               <div className="w-16 h-16 sm:w-20 sm:h-20 bg-slate-100 rounded-[1.5rem] sm:rounded-[2rem] flex items-center justify-center mx-auto mb-6 text-slate-300">
-                  <Clock className="w-8 h-8 sm:w-10 sm:h-10" />
-               </div>
-               <h3 className="font-black text-slate-800 text-lg sm:text-xl capitalize mb-2">{activeTab}</h3>
-               <p className="text-xs sm:text-sm text-slate-400 max-w-xs mx-auto">This feature is currently under development. Stay tuned for updates!</p>
+              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-slate-100 rounded-[1.5rem] sm:rounded-[2rem] flex items-center justify-center mx-auto mb-6 text-slate-300">
+                <Clock className="w-8 h-8 sm:w-10 sm:h-10" />
+              </div>
+              <h3 className="font-black text-slate-800 text-lg sm:text-xl capitalize mb-2">{activeTab}</h3>
+              <p className="text-xs sm:text-sm text-slate-400 max-w-xs mx-auto">This feature is currently under development. Stay tuned for updates!</p>
             </div>
           </div>
         )}
