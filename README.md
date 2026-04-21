@@ -1,40 +1,42 @@
 # 🩺 2Care.ai – Voice-Based AI Medical Assistant
 
-An AI-powered **voice-first healthcare assistant** that helps users describe symptoms, get doctor recommendations, and book appointments through a conversational experience.
+An AI-powered **voice-first healthcare assistant** that allows users to describe symptoms, get doctor recommendations, and book appointments through a conversational interface.
 
-Built with a focus on **real-time voice interaction, medical flow simulation, and scalable AI architecture design**.
+Built to simulate a **real-world AI healthcare system** with scalable architecture.
 
 ---
 
 ## 🚀 Live Demo
 
-🌐 Vercel (Frontend):  
-https://your-vercel-link.vercel.app
+🌐 **Frontend (Vercel):**
+[https://ai-voice-agent-2-care.vercel.app/](https://ai-voice-agent-2-care.vercel.app/)
 
-🖥 Backend API:  
-https://your-backend-link.onrender.com
+🖥 **Backend API (Render):**
+[https://aivoiceagent-2care.onrender.com/](https://aivoiceagent-2care.onrender.com/)
 
-📦 GitHub Repo:  
-https://github.com/your-username/2care-ai
+📦 **GitHub Repository:**
+[https://github.com/Saichandanyadav/AiVoiceAgent-2Care](https://github.com/Saichandanyadav/AiVoiceAgent-2Care)
 
 ---
 
-## 📁 Project Structure
+## 📁 Project Structure (Root Level)
 
 ```
-
-2care-ai/
+voice-ai-agent/
 │
-├── frontend/ (Next.js App)
-│   ├── app/
-│   │   ├── page.tsx
-│   │   └── layout.tsx
-│   ├── components/
-│   │   └── VoiceRecorder.tsx
-│   ├── styles/
-│   └── public/
+├── frontend/                 # Next.js Frontend
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── page.tsx
+│   │   │   └── layout.tsx
+│   │   ├── components/
+│   │   │   └── VoiceRecorder.tsx
+│   │   └── styles/
+│   ├── public/
+│   ├── package.json
+│   └── tsconfig.json
 │
-├── backend/ (Node.js + Express)
+├── backend/                 # Node.js + Express Backend
 │   ├── src/
 │   │   ├── agents/
 │   │   │   └── agent.ts
@@ -44,170 +46,182 @@ https://github.com/your-username/2care-ai
 │   │   │   └── voice.routes.ts
 │   │   ├── services/
 │   │   │   ├── speech.service.ts
-│   │   │   └── tts.service.ts
+│   │   │   ├── tts.service.ts
+│   │   │   └── memory.service.ts
 │   │   ├── utils/
 │   │   │   └── latency.ts
-│   │   └── server.ts
+│   │   └── app.ts
+│   ├── dist/               # Compiled output (TS → JS)
+│   ├── package.json
+│   └── tsconfig.json
 │
-├── uploads/
-├── outputs/
-├── package.json
-└── README.md
-
-````
+├── uploads/                # Incoming audio files
+├── outputs/                # Generated audio responses
+├── README.md
+└── .gitignore
+```
 
 ---
 
 ## 🧠 Project Overview
 
-2Care.ai is a **simulated AI healthcare assistant** designed to demonstrate:
+2Care.ai is a **voice-driven AI assistant simulation** designed to demonstrate:
 
-- Voice-to-text interaction
-- AI-driven conversation flow
-- Doctor recommendation system
-- Appointment booking workflow
-- Real-time chat UI with animations
-
----
-
-## ⚠️ IMPORTANT – WHY MOCK DATA IS USED
-
-This project currently uses **mock AI responses instead of OpenAI API** due to:
-
-### ❌ Reason:
-- OpenAI free credits are not available
-- Paid API usage is not enabled for this project
-
-### ✅ What is mocked:
-- Speech-to-text (STT)
-- AI agent responses
-- Text-to-speech (TTS)
-- Doctor availability system
-- Appointment scheduling logic
+* 🎤 Voice input → conversational flow
+* 🧠 AI-driven decision making (mocked)
+* 👨‍⚕️ Doctor recommendation system
+* 📅 Appointment booking workflow
+* 💬 Real-time chat UI with animations
 
 ---
 
-## 🧪 Mock System Design (How It Works)
+## ⚠️ IMPORTANT: Why Mock Data is Used
 
-Instead of real AI APIs, the backend simulates:
+This project **intentionally uses mock implementations** instead of real AI APIs.
 
-### 🎤 Speech Input
-```
+### ❌ Reason
 
-Frontend → Audio → Backend
+* OpenAI free credits were not available
+* Paid API usage was not enabled
 
-```
+### ✅ What is Mocked
 
-### 🧠 AI Agent (Mock Logic)
-```
-
-Symptoms → Doctor List → Slot Selection → Booking Confirmation
-
-```
-
-### 📊 Example Flow
-
-User:
-“I have stomach pain”
-
-System:
-→ Suggests doctors (Gastro / Internal Medicine)
-→ Shows available slots (11AM, 2PM, 4PM)
-→ Confirms appointment
+* Speech-to-Text (STT)
+* AI Agent responses
+* Text-to-Speech (TTS)
+* Doctor availability
+* Appointment booking logic
 
 ---
 
-## 👨‍⚕️ Doctor System (Mock Data)
+## 🧪 Mock System Design
 
-Used for UI simulation:
+### 🎤 Voice Flow
 
-- Dr. Arjun Mehta → Gastroenterologist
-- Dr. Sneha Reddy → General Physician
-- Dr. Vikram Iyer → Internal Medicine Specialist
+```
+User Voice → Audio Upload → Backend → Mock STT → Agent → Response
+```
 
-Each doctor is dynamically rendered in UI cards with:
-- Avatar initials
-- Specialty
-- Clickable selection UI
+### 🧠 AI Flow
+
+```
+Symptoms → Doctor Suggestion → Slot Selection → Confirmation
+```
+
+---
+
+## 💬 Example Interaction
+
+**User:**
+"I have stomach pain"
+
+**System Flow:**
+
+* Detects symptom
+* Suggests doctors
+* Shows available slots
+* Confirms appointment
+
+---
+
+## 👨‍⚕️ Doctor System (Mocked)
+
+* Dr. Arjun Mehta → Gastroenterologist
+* Dr. Sneha Reddy → General Physician
+* Dr. Vikram Iyer → Internal Medicine Specialist
+
+UI includes:
+
+* Avatar initials
+* Specialty tags
+* Interactive selection cards
 
 ---
 
 ## 📅 Slot System
 
-Mock slots:
-- 11:00 AM
-- 02:00 PM
-- 04:00 PM
+Available slots:
 
-Displayed with:
-- Clock icons
-- Button-based selection UI
-- Responsive grid layout
+* 11:00 AM
+* 02:00 PM
+* 04:00 PM
 
----
+Features:
 
-## 💡 Why Mock Architecture is Important
-
-This system was intentionally designed to:
-
-✔ Simulate real production AI pipelines  
-✔ Allow frontend + backend decoupling  
-✔ Enable UI/UX development without API cost  
-✔ Test latency handling & conversational flows  
+* Button-based selection
+* Responsive grid layout
+* Visual feedback
 
 ---
 
-## 🚀 Can This Scale to Real AI?
+## 💡 Why This Mock Architecture Matters
 
-YES — easily.
+This is not a limitation — it’s intentional design.
 
-### 🔁 Replaceable Modules:
+### Key Advantages:
 
-| Module | Current | Future Upgrade |
-|--------|--------|----------------|
-| STT | Mock flow | Whisper API / Deepgram |
-| AI Agent | Rule-based logic | GPT-4 / GPT-4o |
-| TTS | Empty file stub | OpenAI TTS / ElevenLabs |
-| Doctor system | Static JSON | Real hospital DB |
-| Slots | Hardcoded | Calendar API |
+* ✔ No dependency on paid APIs
+* ✔ Fully testable system flow
+* ✔ Faster frontend development
+* ✔ Clear separation of concerns
+* ✔ Production-ready structure
 
 ---
 
-## 🧠 Future Scalability Plan
+## 🚀 Scalability (Future Upgrade Path)
 
-This architecture can evolve into:
+This system is designed to **plug into real AI easily**.
 
-### 🏥 Phase 1 (Current)
-- Mock AI assistant
-- Simulated medical flow
+### 🔁 Replaceable Modules
 
-### 🤖 Phase 2
-- OpenAI GPT integration
-- Real speech-to-text
+* STT → OpenAI Whisper / Deepgram
+* AI Agent → GPT-4 / GPT-4o
+* TTS → OpenAI / ElevenLabs
+* Doctor Data → Real hospital database
+* Slots → Calendar APIs
 
-### 🏥 Phase 3
-- Hospital database integration
-- Real doctor scheduling system
+---
 
-### 💳 Phase 4
-- Payments (consultation booking)
-- Video consultation system
+## 🧠 Future Roadmap
+
+### Phase 1 (Current)
+
+* Mock AI assistant
+* Voice-based UI
+* Simulated booking
+
+### Phase 2
+
+* Real AI (OpenAI integration)
+* Real speech-to-text
+
+### Phase 3
+
+* Hospital DB integration
+* Real doctor scheduling
+
+### Phase 4
+
+* Payments
+* Video consultation
 
 ---
 
 ## ⚙️ Tech Stack
 
 ### Frontend
-- Next.js (App Router)
-- Tailwind CSS
-- Lucide Icons
-- Web Speech API
+
+* Next.js (App Router)
+* Tailwind CSS
+* Lucide Icons
+* Web Speech API
 
 ### Backend
-- Node.js
-- Express
-- Multer (audio upload)
-- Session-based agent logic
+
+* Node.js
+* Express
+* Multer
+* TypeScript
 
 ---
 
@@ -215,35 +229,40 @@ This architecture can evolve into:
 
 ```
 POST /api/voice
-→ Audio Upload
-→ Speech-to-Text (mock)
+
+→ Upload Audio
+→ Mock Speech-to-Text
 → Agent Processing
 → Response JSON
-→ Frontend UI rendering
+→ UI Rendering
 ```
 
 ---
 
 ## 📊 Key Features
 
-- 🎤 Voice-based interaction
-- 🧠 AI conversation simulation
-- 👨‍⚕️ Doctor recommendation system
-- 📅 Appointment booking flow
-- 💬 Real-time chat UI
-- 📱 Fully responsive design
-- ⚡ Smooth loading + thinking animations
+* 🎤 Voice-based interaction
+* 🧠 AI conversation simulation
+* 👨‍⚕️ Doctor recommendation
+* 📅 Appointment booking
+* 💬 Real-time chat UI
+* 📱 Responsive design
+* ⚡ Smooth animations
 
 ---
 
 ## 🧑‍💻 Author
 
-Built with ❤️ by Sai Chandan Gundaboina
+Sai Chandan Gundaboina
 
 ---
 
 ## 📌 Final Note
 
-This project is a **production-grade UI/UX simulation of an AI healthcare assistant**, designed to be easily upgraded into a real AI system by replacing mock services with OpenAI / medical APIs.
+This project is a **production-style AI system simulation**.
 
-```
+Even though it uses mock data, the architecture is built in a way that:
+
+* Real AI can be plugged in instantly
+* Backend can scale independently
+* Frontend is already production-ready
